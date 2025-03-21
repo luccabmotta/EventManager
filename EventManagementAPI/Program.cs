@@ -1,5 +1,6 @@
 using EventManagementAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 

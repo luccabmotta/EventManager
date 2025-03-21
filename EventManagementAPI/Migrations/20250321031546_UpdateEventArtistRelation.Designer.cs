@@ -4,6 +4,7 @@ using EventManagementAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventManagementAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250321031546_UpdateEventArtistRelation")]
+    partial class UpdateEventArtistRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace EventManagementAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ArtistEvent", b =>
-                {
-                    b.Property<int>("ArtistsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArtistsId", "EventsId");
-
-                    b.HasIndex("EventsId");
-
-                    b.ToTable("ArtistEvent");
-                });
 
             modelBuilder.Entity("EventManagementAPI.Models.Artist", b =>
                 {
@@ -51,6 +39,9 @@ namespace EventManagementAPI.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
 
@@ -62,6 +53,8 @@ namespace EventManagementAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.ToTable("Artists");
                 });
@@ -93,19 +86,16 @@ namespace EventManagementAPI.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("ArtistEvent", b =>
+            modelBuilder.Entity("EventManagementAPI.Models.Artist", b =>
                 {
-                    b.HasOne("EventManagementAPI.Models.Artist", null)
-                        .WithMany()
-                        .HasForeignKey("ArtistsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EventManagementAPI.Models.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Artists")
+                        .HasForeignKey("EventId");
+                });
+
+            modelBuilder.Entity("EventManagementAPI.Models.Event", b =>
+                {
+                    b.Navigation("Artists");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,6 @@
 ﻿using EventManagementAPI.Data;
 using EventManagementAPI.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ namespace EventManagementAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
-            return await _context.Artists.ToListAsync();
+            return await _context.Artists.Include(a => a.Events).ToListAsync();
         }
 
         // GET: api/artists/5
@@ -57,6 +58,47 @@ namespace EventManagementAPI.Controllers
             }
 
             _context.Entry(artist).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArtistExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PATCH: api/artists/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchArtist(int id, [FromBody] JsonPatchDocument<Artist> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest();
+            }
+
+            var artist = await _context.Artists.FindAsync(id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            patchDoc.ApplyTo(artist, (error) => ModelState.AddModelError(error.AffectedObject?.ToString() ?? "", error.ErrorMessage));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {

@@ -228,3 +228,5 @@ FakesAssemblies/
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
 **/*.Desktop
+
+/Migrations/

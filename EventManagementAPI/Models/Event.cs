@@ -18,6 +18,6 @@ namespace EventManagementAPI.Models
         [Required]
         public required string Location { get; set; }
 
-        public List<int> ArtistIds { get; set; } = new();
+        public List<Artist> Artists { get; set; } = new();
     }
 }
