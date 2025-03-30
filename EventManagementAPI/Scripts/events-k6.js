@@ -3,7 +3,7 @@ import { check, sleep } from 'k6';
 
 export let options = {
     vus: 10, // 10 usuários virtuais simultâneos
-    duration: '30s', // Tempo total de execução do teste
+    duration: '20s', // Tempo total de execução do teste
 };
 
 const BASE_URL = 'https://localhost:7010/api/events'; // Substitua pelo endpoint real
@@ -39,6 +39,63 @@ export default function () {
         let getSingleResponse = http.get(`${BASE_URL}/${eventId}`);
         check(getSingleResponse, {
             'GET /api/events/{id} status é 200': (res) => res.status === 200,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
+        });
+    }
+
+    if (eventId) {
+        let deleteResponse = http.del(`${BASE_URL}/${eventId}`);
+        check(deleteResponse, {
+            'DELETE /api/events/{id} status é 204': (res) => res.status === 204,
         });
     }
 
