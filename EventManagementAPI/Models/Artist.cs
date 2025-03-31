@@ -19,5 +19,7 @@ namespace EventManagementAPI.Models
         public string? Email { get; set; }
 
         public List<int> EventIds { get; set; } = new();
+
+        public List<int> GenreIds { get; set; } = new();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EventManagementAPI.Interfaces;
 using EventManagementAPI.Models;
 using EventManagementAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;

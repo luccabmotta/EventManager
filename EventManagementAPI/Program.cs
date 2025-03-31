@@ -11,6 +11,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using EventManagementAPI.Services.EventManagementAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Adiciona controllers
 builder.Services.AddControllers();
+
+builder.Services.AddResponseCaching();
 
 // Configurando Rate Limiting
 //builder.Services.AddRateLimiter(options =>
@@ -70,9 +75,13 @@ builder.Services.AddVersionedApiExplorer(setup =>
 // Configuração de injeção de dependências
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+
 
 builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Configuração de URLs minúsculas
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
@@ -91,9 +100,56 @@ builder.Services.AddSwaggerGen(options =>
         });
     }
 
+    // Configuração da segurança no Swagger
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Digite 'Bearer {seu token JWT}' para se autenticar."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+
     options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
     options.OperationFilter<RemoveVersionParameter>(); // Ajuste para remover o conflito de versões
     options.DocumentFilter<ReplaceVersionWithExactValueInPath>();
+});
+
+var key = Encoding.ASCII.GetBytes("characteristicrepresentativeidentificationconstitutionalinfrastructuresuperintendent");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false, 
+        ValidateAudience = false,
+        ValidateLifetime = true
+    };
 });
 
 var app = builder.Build();
@@ -115,6 +171,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 //app.UseRateLimiter();
+app.UseResponseCaching(); // Ativar middleware de cache
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
