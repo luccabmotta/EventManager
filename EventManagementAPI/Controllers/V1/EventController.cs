@@ -1,11 +1,13 @@
 ﻿using EventManagementAPI.Interfaces;
 using EventManagementAPI.Models;
 using EventManagementAPI.Services;
+using EventManagementAPI.Services.EventManagementAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace EventManagementAPI.Controllers.V1
 {
@@ -50,6 +52,8 @@ namespace EventManagementAPI.Controllers.V1
                 _ => query.OrderBy(e => e.Id) // Padrão
             };
 
+            pageSize = pageSize > 200 ? 200 : pageSize;
+
             // Paginação
             var totalItems = await query.CountAsync();
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
@@ -87,25 +91,27 @@ namespace EventManagementAPI.Controllers.V1
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
-            if (id != @event.Id) return BadRequest();
-            await _eventService.UpdateAsync(@event);
+            var success = await _eventService.UpdateAsync(id, @event);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
 
         [MapToApiVersion("1.0")]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchEvent(int id, [FromBody] JsonPatchDocument<Event> patchDoc)
+        public async Task<IActionResult> PatchEvent(int id, [FromBody] JObject eventPatch)
         {
-            if (patchDoc == null) return BadRequest();
+            var success = await _eventService.PatchEventAsync(id, eventPatch);
 
-            var evento = await _eventService.GetByIdAsync(id);
-            if (evento == null) return NotFound();
+            if (!success)
+            {
+                return NotFound();
+            }
 
-            patchDoc.ApplyTo(evento, (error) => ModelState.AddModelError(error.AffectedObject?.ToString() ?? "", error.ErrorMessage));
-
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            await _eventService.UpdateAsync(evento);
             return NoContent();
         }
 

@@ -4,7 +4,11 @@
     using global::EventManagementAPI.Models;
     using global::EventManagementAPI.Repositories;
     using Microsoft.AspNetCore.JsonPatch;
+    using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System.Text;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
     namespace EventManagementAPI.Services
@@ -36,25 +40,26 @@
 
             public async Task<bool> UpdateArtistAsync(int id, Artist artist)
             {
-                if (id != artist.Id || !await _artistRepository.ExistsAsync(id))
+                if (!await _artistRepository.ExistsAsync(id))
                 {
                     return false;
                 }
 
+                artist.Id = id;
+
                 await _artistRepository.UpdateAsync(artist);
+
                 return true;
             }
 
-            public async Task<bool> PatchArtistAsync(int id, JsonPatchDocument<Artist> patchDoc)
+            public async Task<bool> PatchArtistAsync(int id, JObject patch)
             {
                 var artist = await _artistRepository.GetByIdAsync(id);
 
-                if (artist == null)
-                {
-                    return false;
-                }
+                if (artist == null) return false;
 
-                patchDoc.ApplyTo(artist);
+                JsonConvert.PopulateObject(patch.ToString(), artist);
+
                 await _artistRepository.UpdateAsync(artist);
 
                 return true;

@@ -10,15 +10,11 @@ namespace EventManagementAPI.Models
         [Required]
         public required string Name { get; set; }
 
-        public string? Genre { get; set; }
-
         public string? Description { get; set; }
 
         public string? Phone {  get; set; }
 
-        public string? Email { get; set; }
-
-        public List<int> EventIds { get; set; } = new();
+        public required string Email { get; set; }
 
         public List<int> GenreIds { get; set; } = new();
     }

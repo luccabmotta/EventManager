@@ -57,7 +57,6 @@ namespace EventManagementAPI.Repositories
             if (!currentEvent.ArtistIds.Contains(artistId))
             {
                 currentEvent.ArtistIds.Add(artistId);
-                artist.EventIds.Add(eventId);
                 await _context.SaveChangesAsync();
             }
         }
@@ -72,7 +71,6 @@ namespace EventManagementAPI.Repositories
             if (currentEvent.ArtistIds.Contains(artistId))
             {
                 currentEvent.ArtistIds.Remove(artistId);
-                artist.EventIds.Remove(eventId);
                 await _context.SaveChangesAsync();
             }
         }

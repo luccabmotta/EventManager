@@ -1,5 +1,8 @@
 ﻿using EventManagementAPI.Interfaces;
 using EventManagementAPI.Models;
+using EventManagementAPI.Repositories;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace EventManagementAPI.Services
 {
@@ -27,9 +30,31 @@ namespace EventManagementAPI.Services
             await _eventRepository.AddAsync(@event);
         }
 
-        public async Task UpdateAsync(Event @event)
+        public async Task<bool> UpdateAsync(int id, Event @event)
         {
+            if (!await _eventRepository.ExistsAsync(id))
+            {
+                return false;
+            }
+
+            @event.Id = id;
+
             await _eventRepository.UpdateAsync(@event);
+
+            return true;
+        }
+
+        public async Task<bool> PatchEventAsync(int id, JObject patch)
+        {
+            var @event = await _eventRepository.GetByIdAsync(id);
+
+            if (@event == null) return false;
+
+            JsonConvert.PopulateObject(patch.ToString(), @event);
+
+            await _eventRepository.UpdateAsync(@event);
+
+            return true;
         }
 
         public async Task DeleteAsync(int id)
@@ -40,16 +65,6 @@ namespace EventManagementAPI.Services
             {
                 await _eventRepository.DeleteAsync(evento);
             }
-        }
-
-        public async Task AddArtistToEventAsync(int eventId, int artistId)
-        {
-            await _eventRepository.AddArtistToEventAsync(eventId, artistId);
-        }
-
-        public async Task RemoveArtistFromEventAsync(int eventId, int artistId)
-        {
-            await _eventRepository.RemoveArtistFromEventAsync(eventId, artistId);
         }
     }
 }

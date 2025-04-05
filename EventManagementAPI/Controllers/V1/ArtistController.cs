@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EventManagementAPI.Controllers.V1
@@ -29,7 +31,8 @@ namespace EventManagementAPI.Controllers.V1
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? sort = null,
-            [FromQuery] string? name = null)
+            [FromQuery] string? name = null,
+            [FromQuery] string? email = null)
         {
             var query = _artistService.GetAll();
 
@@ -37,13 +40,20 @@ namespace EventManagementAPI.Controllers.V1
             if (!string.IsNullOrEmpty(name))
                 query = query.Where(a => a.Name.Contains(name));
 
+            if (!string.IsNullOrEmpty(email))
+                query = query.Where(a => a.Email.Contains(email));
+
             // Ordenação
             query = sort?.ToLower() switch
             {
                 "name_asc" => query.OrderBy(a => a.Name),
                 "name_desc" => query.OrderByDescending(a => a.Name),
+                "email_asc" => query.OrderBy(a => a.Email),
+                "email_desc" => query.OrderByDescending(a => a.Email),
                 _ => query.OrderBy(a => a.Id) // Padrão
             };
+
+            pageSize = pageSize > 200 ? 200 : pageSize;
 
             // Paginação
             var totalItems = await query.CountAsync();
@@ -90,18 +100,20 @@ namespace EventManagementAPI.Controllers.V1
         public async Task<IActionResult> PutArtist(int id, Artist artist)
         {
             var success = await _artistService.UpdateArtistAsync(id, artist);
+
             if (!success)
             {
                 return NotFound();
             }
+
             return NoContent();
         }
 
         [MapToApiVersion("1.0")]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchArtist(int id, [FromBody] JsonPatchDocument<Artist> patchDoc)
+        public async Task<IActionResult> PatchArtist(int id, [FromBody] JObject artistPatch)
         {
-            var success = await _artistService.PatchArtistAsync(id, patchDoc);
+            var success = await _artistService.PatchArtistAsync(id, artistPatch);
 
             if (!success)
             {

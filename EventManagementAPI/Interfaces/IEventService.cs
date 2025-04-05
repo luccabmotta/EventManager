@@ -1,4 +1,5 @@
 ﻿using EventManagementAPI.Models;
+using Newtonsoft.Json.Linq;
 
 namespace EventManagementAPI.Interfaces
 {
@@ -7,9 +8,8 @@ namespace EventManagementAPI.Interfaces
         IQueryable<Event> GetAll();
         Task<Event?> GetByIdAsync(int id);
         Task AddAsync(Event @event);
-        Task UpdateAsync(Event @event);
+        Task<bool> UpdateAsync(int id, Event @event);
+        Task<bool> PatchEventAsync(int id, JObject patch);
         Task DeleteAsync(int id);
-        Task AddArtistToEventAsync(int eventId, int artistId);
-        Task RemoveArtistFromEventAsync(int eventId, int artistId);
     }
 }
