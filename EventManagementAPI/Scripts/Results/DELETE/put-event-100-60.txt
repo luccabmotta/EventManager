@@ -1,0 +1,26 @@
+        script: tests-delete-event.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 100 max VUs, 1m30s max duration (incl. graceful stop):
+              * default: 100 looping VUs for 1m0s (gracefulStop: 30s)
+
+     data_received..................: 43 MB  720 kB/s
+     data_sent......................: 34 MB  567 kB/s
+     group_duration.................: avg=18.78ms min=1.26ms med=16.13ms max=5.09s   p(90)=25.64ms  p(95)=29.63ms
+     http_req_blocked...............: avg=7.22탎  min=0s     med=0s      max=26.35ms p(90)=0s       p(95)=0s
+     http_req_connecting............: avg=889ns   min=0s     med=0s      max=6.89ms  p(90)=0s       p(95)=0s
+     http_req_duration..............: avg=18.71ms min=1.26ms med=16.08ms max=5.09s   p(90)=25.58ms  p(95)=29.56ms
+       { expected_response:true }...: avg=18.71ms min=1.26ms med=16.08ms max=5.09s   p(90)=25.58ms  p(95)=29.56ms
+     http_req_failed................: 0.00%  0 out of 319214
+     http_req_receiving.............: avg=38.22탎 min=0s     med=0s      max=3.61ms  p(90)=0s       p(95)=505.49탎
+     http_req_sending...............: avg=62.1탎  min=0s     med=0s      max=3.61ms  p(90)=505.49탎 p(95)=533.59탎
+     http_req_tls_handshaking.......: avg=5.75탎  min=0s     med=0s      max=23.22ms p(90)=0s       p(95)=0s
+     http_req_waiting...............: avg=18.61ms min=1.26ms med=15.98ms max=5.09s   p(90)=25.48ms  p(95)=29.44ms
+     http_reqs......................: 319214 5317.355634/s
+     iteration_duration.............: avg=37.59ms min=5.03ms med=33.59ms max=5.12s   p(90)=45.97ms  p(95)=50.44ms
+     iterations.....................: 159607 2658.677817/s
+     vus............................: 100    min=100         max=100
+     vus_max........................: 100    min=100         max=100
+
+
+running (1m00.0s), 000/100 VUs, 159607 complete and 0 interrupted iterations

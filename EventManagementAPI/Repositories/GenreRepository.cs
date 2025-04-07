@@ -17,7 +17,7 @@ namespace EventManagementAPI.Repositories
 
         public async Task<List<Genre>> GetAll()
         {
-            return await _context.Genres.AsNoTracking().ToListAsync();
+            return await _context.Genres.ToListAsync();
         }
     }
 }

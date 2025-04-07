@@ -2,22 +2,11 @@
 import { sleep } from 'k6';
 
 export let options = {
-    vus: 10,
-    duration: '30s',
+    vus: 100,
+    duration: '60s',
 };
 
-const BASE_URL = 'https://localhost:7010/api/v1';
-
-export function updateArtist() {
-    const artistPayload = JSON.stringify({
-        name: 'Artista Atualizado',
-        email: 'artista_atualizado@exemplo.com',
-    });
-
-    let res = http.put(`${BASE_URL}/artists/903`, artistPayload, {
-        headers: { 'Content-Type': 'application/json' },
-    });
-}
+const BASE_URL = 'https://localhost:5001/api/v1';
 
 export function updateEvent() {
     const eventPayload = JSON.stringify({
@@ -32,7 +21,5 @@ export function updateEvent() {
 }
 
 export default function () {
-    updateArtist();
     updateEvent();
-    sleep(1);
 }

@@ -1,0 +1,26 @@
+        script: tests-patch-event.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 10 max VUs, 1m30s max duration (incl. graceful stop):
+              * default: 10 looping VUs for 1m0s (gracefulStop: 30s)
+
+
+     data_received..................: 7.2 MB 120 kB/s
+     data_sent......................: 31 MB  513 kB/s
+     http_req_blocked...............: avg=1.15탎  min=0s med=0s     max=21.55ms p(90)=0s     p(95)=0s
+     http_req_connecting............: avg=56ns    min=0s med=0s     max=1.16ms  p(90)=0s     p(95)=0s
+     http_req_duration..............: avg=2.87ms  min=0s med=2.83ms max=40ms    p(90)=3.6ms  p(95)=3.96ms
+       { expected_response:true }...: avg=2.87ms  min=0s med=2.83ms max=40ms    p(90)=3.6ms  p(95)=3.96ms
+     http_req_failed................: 0.00%  0 out of 205092
+     http_req_receiving.............: avg=23.96탎 min=0s med=0s     max=2.2ms   p(90)=0s     p(95)=0s
+     http_req_sending...............: avg=40.7탎  min=0s med=0s     max=2.38ms  p(90)=0s     p(95)=533.29탎
+     http_req_tls_handshaking.......: avg=611ns   min=0s med=0s     max=13.09ms p(90)=0s     p(95)=0s
+     http_req_waiting...............: avg=2.8ms   min=0s med=2.78ms max=40ms    p(90)=3.54ms p(95)=3.88ms
+     http_reqs......................: 205092 3417.981859/s
+     iteration_duration.............: avg=2.91ms  min=0s med=2.86ms max=60.93ms p(90)=3.65ms p(95)=4ms
+     iterations.....................: 205092 3417.981859/s
+     vus............................: 10     min=10          max=10
+     vus_max........................: 10     min=10          max=10
+
+
+running (1m00.0s), 00/10 VUs, 205092 complete and 0 interrupted iterations

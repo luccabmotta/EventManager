@@ -1,0 +1,26 @@
+        script: tests-post-event.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 1m30s max duration (incl. graceful stop):
+              * default: 50 looping VUs for 1m0s (gracefulStop: 30s)
+
+
+     data_received..................: 94 MB  1.6 MB/s
+     data_sent......................: 62 MB  1.0 MB/s
+     http_req_blocked...............: avg=3.22탎  min=0s med=0s     max=27.89ms p(90)=0s      p(95)=0s
+     http_req_connecting............: avg=273ns   min=0s med=0s     max=3.1ms   p(90)=0s      p(95)=0s
+     http_req_duration..............: avg=7.24ms  min=0s med=5.06ms max=5.03s   p(90)=12.98ms p(95)=16.53ms
+       { expected_response:true }...: avg=7.24ms  min=0s med=5.06ms max=5.03s   p(90)=12.98ms p(95)=16.53ms
+     http_req_failed................: 0.00%  0 out of 409961
+     http_req_receiving.............: avg=34.48탎 min=0s med=0s     max=26.06ms p(90)=0s      p(95)=522.2탎
+     http_req_sending...............: avg=72.89탎 min=0s med=0s     max=5.75ms  p(90)=527탎   p(95)=542.2탎
+     http_req_tls_handshaking.......: avg=2.01탎  min=0s med=0s     max=20.68ms p(90)=0s      p(95)=0s
+     http_req_waiting...............: avg=7.13ms  min=0s med=4.96ms max=5.03s   p(90)=12.86ms p(95)=16.43ms
+     http_reqs......................: 409961 6832.042169/s
+     iteration_duration.............: avg=7.3ms   min=0s med=5.12ms max=5.03s   p(90)=13.05ms p(95)=16.61ms
+     iterations.....................: 409961 6832.042169/s
+     vus............................: 50     min=50          max=50
+     vus_max........................: 50     min=50          max=50
+
+
+running (1m00.0s), 00/50 VUs, 409961 complete and 0 interrupted iterations

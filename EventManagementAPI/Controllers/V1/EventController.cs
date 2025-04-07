@@ -42,19 +42,17 @@ namespace EventManagementAPI.Controllers.V1
             if (!string.IsNullOrEmpty(location))
                 query = query.Where(e => e.Location.Contains(location));
 
-            // Ordenação
             query = sort?.ToLower() switch
             {
                 "name_asc" => query.OrderBy(e => e.Name),
                 "name_desc" => query.OrderByDescending(e => e.Name),
                 "date_asc" => query.OrderBy(e => e.Date),
                 "date_desc" => query.OrderByDescending(e => e.Date),
-                _ => query.OrderBy(e => e.Id) // Padrão
+                _ => query.OrderBy(e => e.Id) 
             };
 
             pageSize = pageSize > 200 ? 200 : pageSize;
 
-            // Paginação
             var totalItems = await query.CountAsync();
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 

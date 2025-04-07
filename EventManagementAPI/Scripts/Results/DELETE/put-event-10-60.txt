@@ -1,0 +1,26 @@
+        script: tests-delete-event.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 10 max VUs, 1m30s max duration (incl. graceful stop):
+              * default: 10 looping VUs for 1m0s (gracefulStop: 30s)
+
+     data_received..................: 42 MB  693 kB/s
+     data_sent......................: 32 MB  525 kB/s
+     group_duration.................: avg=2ms     min=0s      med=1.57ms max=5.01s   p(90)=2.42ms p(95)=2.89ms
+     http_req_blocked...............: avg=958ns   min=0s      med=0s     max=22.87ms p(90)=0s     p(95)=0s
+     http_req_connecting............: avg=18ns    min=0s      med=0s     max=1.05ms  p(90)=0s     p(95)=0s
+     http_req_duration..............: avg=1.94ms  min=0s      med=1.54ms max=5.01s   p(90)=2.36ms p(95)=2.85ms
+       { expected_response:true }...: avg=1.94ms  min=0s      med=1.54ms max=5.01s   p(90)=2.36ms p(95)=2.85ms
+     http_req_failed................: 0.00%  0 out of 299356
+     http_req_receiving.............: avg=38.15탎 min=0s      med=0s     max=2.53ms  p(90)=0s     p(95)=516.1탎
+     http_req_sending...............: avg=55.47탎 min=0s      med=0s     max=2.37ms  p(90)=0s     p(95)=530.1탎
+     http_req_tls_handshaking.......: avg=473ns   min=0s      med=0s     max=14.95ms p(90)=0s     p(95)=0s
+     http_req_waiting...............: avg=1.85ms  min=0s      med=1.33ms max=5.01s   p(90)=2.27ms p(95)=2.76ms
+     http_reqs......................: 299356 4935.18422/s
+     iteration_duration.............: avg=4.04ms  min=502.6탎 med=3.15ms max=5.02s   p(90)=4.48ms p(95)=5.16ms
+     iterations.....................: 149678 2467.59211/s
+     vus............................: 10     min=10          max=10
+     vus_max........................: 10     min=10          max=10
+
+
+running (1m00.7s), 00/10 VUs, 149678 complete and 0 interrupted iterations

@@ -1,0 +1,26 @@
+        script: tests-patch-artist.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 1m30s max duration (incl. graceful stop):
+              * default: 50 looping VUs for 1m0s (gracefulStop: 30s)
+
+
+     data_received..................: 6.4 MB 106 kB/s
+     data_sent......................: 23 MB  386 kB/s
+     http_req_blocked...............: avg=6.72탎  min=0s     med=0s      max=25.67ms p(90)=0s      p(95)=0s
+     http_req_connecting............: avg=722ns   min=0s     med=0s      max=3.13ms  p(90)=0s      p(95)=0s
+     http_req_duration..............: avg=16.81ms min=4.51ms med=14.93ms max=4.93s   p(90)=17.64ms p(95)=19.59ms
+       { expected_response:true }...: avg=16.81ms min=4.51ms med=14.93ms max=4.93s   p(90)=17.64ms p(95)=19.59ms
+     http_req_failed................: 0.00%  0 out of 177762
+     http_req_receiving.............: avg=25.63탎 min=0s     med=0s      max=2.9ms   p(90)=0s      p(95)=0s
+     http_req_sending...............: avg=38.63탎 min=0s     med=0s      max=2.32ms  p(90)=0s      p(95)=531.4탎
+     http_req_tls_handshaking.......: avg=4.37탎  min=0s     med=0s      max=18.25ms p(90)=0s      p(95)=0s
+     http_req_waiting...............: avg=16.75ms min=3.95ms med=14.87ms max=4.93s   p(90)=17.56ms p(95)=19.5ms
+     http_reqs......................: 177762 2962.025892/s
+     iteration_duration.............: avg=16.86ms min=8.72ms med=14.98ms max=4.93s   p(90)=17.68ms p(95)=19.66ms
+     iterations.....................: 177762 2962.025892/s
+     vus............................: 50     min=50          max=50
+     vus_max........................: 50     min=50          max=50
+
+
+running (1m00.0s), 00/50 VUs, 177762 complete and 0 interrupted iterations

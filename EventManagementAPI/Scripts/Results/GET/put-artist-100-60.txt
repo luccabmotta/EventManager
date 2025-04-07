@@ -1,0 +1,26 @@
+        script: tests-get-artist.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 100 max VUs, 1m30s max duration (incl. graceful stop):
+              * default: 100 looping VUs for 1m0s (gracefulStop: 30s)
+
+
+     data_received..................: 998 MB 17 MB/s
+     data_sent......................: 20 MB  335 kB/s
+     http_req_blocked...............: avg=9.58탎  min=0s    med=0s      max=35.27ms p(90)=0s      p(95)=0s
+     http_req_connecting............: avg=1.12탎  min=0s    med=0s      max=4.9ms   p(90)=0s      p(95)=0s
+     http_req_duration..............: avg=17.89ms min=0s    med=10.71ms max=4.77s   p(90)=36.59ms p(95)=58.95ms
+       { expected_response:true }...: avg=17.89ms min=0s    med=10.71ms max=4.77s   p(90)=36.59ms p(95)=58.95ms
+     http_req_failed................: 0.00%  0 out of 334120
+     http_req_receiving.............: avg=71.45탎 min=0s    med=0s      max=16.67ms p(90)=524.5탎 p(95)=542.69탎
+     http_req_sending...............: avg=51.87탎 min=0s    med=0s      max=6.58ms  p(90)=0s      p(95)=535.8탎
+     http_req_tls_handshaking.......: avg=6.91탎  min=0s    med=0s      max=27.15ms p(90)=0s      p(95)=0s
+     http_req_waiting...............: avg=17.77ms min=0s    med=10.57ms max=4.77s   p(90)=36.46ms p(95)=58.8ms
+     http_reqs......................: 334120 5566.972526/s
+     iteration_duration.............: avg=35.9ms  min=4.8ms med=23.93ms max=4.77s   p(90)=66.83ms p(95)=86.63ms
+     iterations.....................: 167060 2783.486263/s
+     vus............................: 100    min=100         max=100
+     vus_max........................: 100    min=100         max=100
+
+
+running (1m00.0s), 000/100 VUs, 167060 complete and 0 interrupted iterations

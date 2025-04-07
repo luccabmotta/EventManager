@@ -157,6 +157,11 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5001, o => o.UseHttps());
+});
+
 var app = builder.Build();
 
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
